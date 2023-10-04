@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
 dotenv.config()
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
@@ -20,6 +21,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
+
+// Cookie parser middleware
+app.use(cookieParser())
 
 app.use(notFound)
 app.use(errorHandler)
