@@ -1,14 +1,16 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken'
 import asyncHandler from './asyncHandler.js'
 import User from '../models/userModel.js'
 
 // Protect routes
 const protect = asyncHandler(async (req, res, next) => {
-  let token
+   let token
 
-  if (req.cookie && req.cookie.jwt) {
-    token = req.cookie.jwt
-  }
+  // if (req.cookie ) {
+    // token = req.cookies.jwt
+  // }
+
+  console.log(token)
 
   if (token) {
     try {
@@ -16,13 +18,13 @@ const protect = asyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.userId).select('-password')
       next()
     } catch (error) {
-      console.log(error)
+      console.error(error)
       res.error(401)
       throw new Error('Not authorized, token failed')
     }
   } else {
     res.status(401)
-    throw new Error('Not authorized, no token')
+    throw new Error('Not authorized, no tokennn')
   }
 })
 
