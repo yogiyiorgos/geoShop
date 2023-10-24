@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import {
   useGetProductDetailsQuery,
   useUpdateProductMutation,
-  useUploadImageMutation,
+  useUploadProductImageMutation,
 } from '../../slices/productsApiSlice';
 
 const ProductEditScreen = () => {
@@ -31,7 +31,7 @@ const ProductEditScreen = () => {
 
   const [updateProduct, { isLoading: loadingUpdate }] = useUpdateProductMutation();
 
-  const [uploadProductImage, { isLoading: loadingUpload }] = useUploadImageMutation()
+  const [uploadProductImage, { isLoading: loadingUpload }] = useUploadProductImageMutation()
 
   const navigate = useNavigate();
 
@@ -48,7 +48,7 @@ const ProductEditScreen = () => {
         description,
         countInStock,
       });
-      toast.success('product updated successfully');
+      toast.success('Product updated');
       refetch();
       navigate('/admin/productlist');
     } catch (err) {

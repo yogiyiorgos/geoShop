@@ -10,9 +10,7 @@ import {
   useDeliverOrderMutation,
   usePayOrderMutation,
   useGetOrderDetailsQuery,
-  usePayOrderMutation,
   useGetPaypalClientIdQuery,
-  usePayOrderMutation
 } from '../slices/ordersApiSlice'
 
 const OrderScreen = () => {

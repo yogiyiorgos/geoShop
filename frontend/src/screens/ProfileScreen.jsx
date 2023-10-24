@@ -7,7 +7,7 @@ import { FaTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useProfileMutation } from '../slices/userApiSlice';
+import { useProfileMutation } from '../slices/usersApiSlice';
 import { useGetMyOrdersQuery } from '../slices/ordersApiSlice';
 import { setCredentials } from '../slices/authSlice';
 
@@ -111,7 +111,7 @@ const ProfileScreen = () => {
             {error?.data?.message || error.error}
           </Message>
         ) : (
-          <Table striped table hover responsive className='table-sm'>
+          <Table striped hover responsive className='table-sm'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -125,7 +125,7 @@ const ProfileScreen = () => {
             <tbody>
               {orders.map((order) => (
                 <tr key={order._id}>
-                  <tD>{order._id}</tDd
+                  <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
                   <td>

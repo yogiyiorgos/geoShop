@@ -64,7 +64,7 @@ export const {
   useLoginMutation, 
   useLogoutMutation, 
   useRegisterMutation,
-  userProfileMutation,
+  useProfileMutation,
   useGetUsersQuery,
   useDeleteUserMutation, 
   useGetUserDetailsQuery,
