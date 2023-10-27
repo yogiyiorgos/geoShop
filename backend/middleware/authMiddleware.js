@@ -2,15 +2,14 @@ import jwt from 'jsonwebtoken'
 import asyncHandler from './asyncHandler.js'
 import User from '../models/userModel.js'
 
-// Protect routes
+// Protect routes - User must be authenticated
 const protect = asyncHandler(async (req, res, next) => {
-   let token
+  let token
 
+  token = req.cookies.jwt
   // if (req.cookie ) {
     // token = req.cookies.jwt
   // }
-
-  console.log(token)
 
   if (token) {
     try {
@@ -24,11 +23,11 @@ const protect = asyncHandler(async (req, res, next) => {
     }
   } else {
     res.status(401)
-    throw new Error('Not authorized, no tokennn')
+    throw new Error('Not authorized, no token')
   }
 })
 
-// Admin middleware
+// Admin middleware - User must be an admin
 const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next()
