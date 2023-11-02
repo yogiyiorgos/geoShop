@@ -8,7 +8,7 @@ import { verifyPayPalPayment, checkIfNewTransaction } from '../utils/paypal.js'
 // @route  POST /api/orders
 // @access Private
 const addOrderItems = asyncHandler(async(req, res) => {
-  const { orderItems, shippingAdddress, paymentMethod } = req.body
+  const { orderItems, shippingAddress, paymentMethod } = req.body
 
   if (orderItems && orderItems.length === 0) {
     res.status(400)
@@ -16,7 +16,7 @@ const addOrderItems = asyncHandler(async(req, res) => {
   } else {
     // Get the ordered items from the DB
     const itemsFromDB = await Product.find({
-      _id: { $in: orderItems.map((item) => item._id) }
+      _id: { $in: orderItems.map((item) => item._id) },
     })
     // Map over the orderItems and use the price from the items in the DB
     const dbOrderItems = orderItems.map((itemFromClient) => {
@@ -27,7 +27,7 @@ const addOrderItems = asyncHandler(async(req, res) => {
         ...itemFromClient,
         product: itemFromClient._id,
         price: matchingItemFromDB.price,
-        _id: undefined
+        _id: undefined,
       }
     })
     // Calculate prices
@@ -36,12 +36,12 @@ const addOrderItems = asyncHandler(async(req, res) => {
     const order = new Order({
       orderItems: dbOrderItems,
       user: req.user._id,
-      shippingAdddress,
+      shippingAddress,
       paymentMethod,
       itemsPrice,
       taxPrice,
       shippingPrice,
-      totalPrice
+      totalPrice,
     })
     const createdOrder = await order.save()
     res.status(201).json(createdOrder)
@@ -87,7 +87,7 @@ const updateOrderToPaid = asyncHandler(async(req, res) => {
   if (order) {
     // Check the amount that has been paid
     const paidCorrectAmount = order.totalPrice.toString() === value
-    if (!paidCorrectAmount) throw new Error('Incorrect ammount was paid')
+    if (!paidCorrectAmount) throw new Error('Incorrect amount was paid')
 
     order.isPaid = true
     order.paidAt = Date.now()
